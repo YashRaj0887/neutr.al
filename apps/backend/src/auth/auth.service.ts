@@ -8,12 +8,15 @@ import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { UserDocument } from '../users/schemas/user.schema';
+import { ProfilesService } from '../profiles/profiles.service';
 
 @Injectable()
 export class AuthService {
   constructor(
+
     private usersService: UsersService,
     private jwtService: JwtService,
+    private profilesService: ProfilesService, 
   ) {}
 
   async register(dto: RegisterDto) {
@@ -29,6 +32,8 @@ export class AuthService {
       passwordHash,
       username: dto.username,
     });
+    await this.profilesService.createDefaultProfile(String(user._id));
+
 
     return { message: 'Registration successful', userId: user._id };
   }
