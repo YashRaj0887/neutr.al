@@ -14,13 +14,13 @@ import { ProfilesModule } from '../profiles/profiles.module';
     UsersModule,
     PassportModule,
     ConfigModule,
+    ProfilesModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: { expiresIn: '7d' },
-        ProfilesModule,
       }),
     }),
   ],
