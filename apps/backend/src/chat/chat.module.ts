@@ -7,12 +7,14 @@ import { ChatService } from './chat.service';
 import { ChatGateway } from './chat.gateway';
 import { RoomModule } from '../room/room.module';
 import { PresenceModule } from '../presence/presence.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
     RoomModule,
     PresenceModule,
+    NotificationModule,
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

@@ -7,6 +7,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { RoomModule } from './room/room.module';
 import { ChatModule } from './chat/chat.module';
 import { PresenceModule } from './presence/presence.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PresenceModule } from './presence/presence.module';
     RoomModule,
     ChatModule,
     PresenceModule,
+    NotificationModule,
   ],
 })
 export class AppModule { }

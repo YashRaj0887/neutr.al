@@ -11,6 +11,8 @@ import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { ChatService } from './chat.service';
 import { PresenceService } from '../presence/presence.service';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationType } from '../notification/schemas/notification.schema';
 import { SendMessageDto } from './dto/send-message.dto';
 
 @WebSocketGateway({
@@ -23,9 +25,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   server: Server;
 
   constructor(
-    private readonly chatService:     ChatService,
-    private readonly jwtService:      JwtService,
-    private readonly presenceService: PresenceService,
+    private readonly chatService:         ChatService,
+    private readonly jwtService:          JwtService,
+    private readonly presenceService:     PresenceService,
+    private readonly notificationService: NotificationService,
   ) {}
 
   // ─── Connection ───────────────────────────────────────────────────────────
@@ -39,10 +42,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       client.data.userId   = payload.sub;
       client.data.username = payload.username;
 
-      // Mark user as online in Redis
       await this.presenceService.setOnline(payload.sub);
-
-      // Notify everyone that this user is now online
       this.server.emit('user:online', { userId: payload.sub });
 
       console.log(`✅ Connected: ${payload.username} (${client.id})`);
@@ -55,17 +55,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleDisconnect(client: Socket) {
     if (client.data.userId) {
-      // Mark user as offline in Redis
       await this.presenceService.setOffline(client.data.userId);
-
-      // Notify everyone that this user is now offline
       this.server.emit('user:offline', { userId: client.data.userId });
     }
-
     console.log(`❌ Disconnected: ${client.data.username} (${client.id})`);
   }
 
-  // ─── Events ───────────────────────────────────────────────────────────────
+  // ─── Room Events ──────────────────────────────────────────────────────────
 
   @SubscribeMessage('room:join')
   handleJoinRoom(
@@ -85,6 +81,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     client.emit('room:left', { roomId: data.roomId });
   }
 
+  // ─── Message Events ───────────────────────────────────────────────────────
+
   @SubscribeMessage('message:send')
   async handleMessage(
     @ConnectedSocket() client: Socket,
@@ -95,7 +93,26 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       client.data.username,
       dto,
     );
+
+    // Broadcast to everyone in the room
     this.server.to(dto.roomId).emit('message:new', message);
+
+    // Create a notification for every OTHER member of the room
+    // Get all sockets in this room and find members who are NOT the sender
+    const socketsInRoom = await this.server.in(dto.roomId).fetchSockets();
+    const notifiedUserIds = new Set<string>();
+
+    for (const socket of socketsInRoom) {
+      const memberId = socket.data.userId as string;
+      if (memberId && memberId !== client.data.userId && !notifiedUserIds.has(memberId)) {
+        notifiedUserIds.add(memberId);
+        await this.notificationService.create(memberId, NotificationType.MESSAGE, {
+          roomId:         dto.roomId,
+          senderName:     client.data.username,
+          messagePreview: dto.content.substring(0, 100),
+        });
+      }
+    }
   }
 
   @SubscribeMessage('message:delete')
@@ -108,6 +125,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       messageId: data.messageId,
     });
   }
+
+  // ─── Typing Events ────────────────────────────────────────────────────────
 
   @SubscribeMessage('user:typing')
   handleTyping(
