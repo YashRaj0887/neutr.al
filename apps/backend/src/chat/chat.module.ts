@@ -6,11 +6,13 @@ import { Message, MessageSchema } from './schemas/message.schema';
 import { ChatService } from './chat.service';
 import { ChatGateway } from './chat.gateway';
 import { RoomModule } from '../room/room.module';
+import { PresenceModule } from '../presence/presence.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
     RoomModule,
+    PresenceModule,
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
