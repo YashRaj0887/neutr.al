@@ -22,13 +22,13 @@ export class RoomController {
   // POST /rooms  →  create a DM or Group room
   @Post()
   create(@Request() req, @Body() dto: CreateRoomDto) {
-    return this.roomService.create(req.user.userId, dto);
+    return this.roomService.create(String(req.user._id), dto);
   }
 
   // GET /rooms  →  list all rooms the logged-in user belongs to
   @Get()
   findMyRooms(@Request() req) {
-    return this.roomService.findMyRooms(req.user.userId);
+    return this.roomService.findMyRooms(String(req.user._id));
   }
 
   // GET /rooms/:id  →  get one room by its ID
@@ -44,7 +44,7 @@ export class RoomController {
     @Param('id') id: string,
     @Body() dto: UpdateRoomDto,
   ) {
-    return this.roomService.update(req.user.userId, id, dto);
+    return this.roomService.update(String(req.user._id), id, dto);
   }
 
   // POST /rooms/:id/members/:memberId  →  add a member (creator only)
@@ -54,7 +54,7 @@ export class RoomController {
     @Param('id') roomId: string,
     @Param('memberId') memberId: string,
   ) {
-    return this.roomService.addMember(req.user.userId, roomId, memberId);
+    return this.roomService.addMember(String(req.user._id), roomId, memberId);
   }
 
   // DELETE /rooms/:id/members/:memberId  →  remove a member
@@ -64,6 +64,6 @@ export class RoomController {
     @Param('id') roomId: string,
     @Param('memberId') memberId: string,
   ) {
-    return this.roomService.removeMember(req.user.userId, roomId, memberId);
+    return this.roomService.removeMember(String(req.user._id), roomId, memberId);
   }
 }

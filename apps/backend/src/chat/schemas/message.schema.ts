@@ -37,7 +37,7 @@ export class Message {
   @Prop({ default: false })
   isEdited: boolean;
 
-  @Prop({ default: null })
+  @Prop({ type: Date, default: null })
   deletedAt: Date | null; // null = visible, Date = soft-deleted
 }
 
