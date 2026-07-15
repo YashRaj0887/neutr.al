@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Register Page
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Password strength ────────────────────────────────────────────────── */
+.strengthBar {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.strengthSegment {
+  flex: 1;
+  height: 3px;
+  background: var(--color-gray-200);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.strengthSegment[data-active="true"] {
+  background: var(--color-black);
+}
+
+.strengthLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--fg-muted);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Submit ────────────────────────────────────────────────────────────── */
+.submitBtn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 2px solid var(--color-black);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-white);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.submitBtn:hover::before {
+  transform: scaleX(1);
+}
+
+.submitBtn:hover {
+  color: var(--color-black);
+}
+
+.submitBtnText {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitBtn:disabled::before {
+  display: none;
+}
+
+/* ── Error & Success ──────────────────────────────────────────────────── */
+.errorMsg {
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: 10px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+  animation: slideDown var(--duration-normal) var(--ease-out);
+}
+
+.successMsg {
+  background: var(--color-white);
+  color: var(--color-black);
+  padding: 10px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+  border: 2px solid var(--color-black);
+  animation: slideDown var(--duration-normal) var(--ease-out);
+}
+
+.footer {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--fg-secondary);
+}
+
+.footerLink {
+  color: var(--color-black);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 1px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.footerLink:hover {
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: 2px 6px;
+  margin: 0 -6px;
+}

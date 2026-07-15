@@ -1,0 +1,126 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Rooms Index Page
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.heroBlock {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.heroCircle {
+  width: 120px;
+  height: 120px;
+  border: 2px solid var(--color-gray-200);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+}
+
+.heroIcon {
+  font-size: 2.5rem;
+}
+
+/* Decorative orbiting dots */
+.orbitDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--color-black);
+  border-radius: 50%;
+  animation: orbit 6s linear infinite;
+}
+
+.orbitDot:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.orbitDot:nth-child(3) {
+  animation-delay: -4s;
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(70px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(70px) rotate(-360deg);
+  }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--fg-secondary);
+  max-width: 300px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+.statsGrid {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.statCard {
+  border: 2px solid var(--color-gray-200);
+  padding: 20px 32px;
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.statCard:hover {
+  border-color: var(--color-black);
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.statNumber {
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.02em;
+}
+
+.hintKey {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 3px;
+  font-weight: 600;
+  margin: 0 2px;
+}

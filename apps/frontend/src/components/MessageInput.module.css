@@ -1,0 +1,84 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Message Input
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.inputArea {
+  padding: 16px 24px;
+  background: var(--color-white);
+  border-top: 2px solid var(--color-black);
+}
+
+.typingIndicator {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--fg-muted);
+  margin-bottom: 8px;
+  height: 16px;
+  letter-spacing: 0.02em;
+  animation: fadeIn var(--duration-fast) var(--ease-out);
+}
+
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.textareaWrapper {
+  flex: 1;
+  position: relative;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-black);
+  resize: none;
+  min-height: 44px;
+  max-height: 160px;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.textarea::placeholder {
+  color: var(--fg-muted);
+}
+
+.textarea:focus {
+  border-color: var(--color-black);
+  background: var(--color-white);
+}
+
+.sendBtn {
+  width: 44px;
+  height: 44px;
+  background: var(--color-black);
+  color: var(--color-white);
+  border: 2px solid var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.sendBtn:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+.sendBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.sendBtn:disabled:hover {
+  background: var(--color-black);
+  color: var(--color-white);
+}

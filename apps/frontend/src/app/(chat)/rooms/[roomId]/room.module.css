@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Room Chat View
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--color-white);
+  border-bottom: 2px solid var(--color-black);
+  min-height: var(--header-height);
+}
+
+.headerBack {
+  display: none;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--fg-secondary);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.headerBack:hover {
+  color: var(--color-black);
+}
+
+@media (max-width: 768px) {
+  .headerBack {
+    display: flex;
+  }
+}
+
+.roomIcon {
+  width: 40px;
+  height: 40px;
+  background: var(--color-black);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.headerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.roomName {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roomDescription {
+  font-size: 0.75rem;
+  color: var(--fg-secondary);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.memberCount {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-gray-200);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* ── Message list ─────────────────────────────────────────────────────── */
+.messageList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Loading ──────────────────────────────────────────────────────────── */
+.loadingState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.loadingText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────── */
+.emptyMessages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--fg-muted);
+}
+
+.emptyIcon {
+  width: 64px;
+  height: 64px;
+  border: 2px dashed var(--color-gray-200);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.emptyTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.emptySubtitle {
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+}
+
+/* ── Scroll to bottom ─────────────────────────────────────────────────── */
+.scrollBottom {
+  position: absolute;
+  bottom: 100px;
+  right: 32px;
+  width: 40px;
+  height: 40px;
+  background: var(--color-black);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.125rem;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--duration-fast) var(--ease-out);
+  animation: slideUp var(--duration-normal) var(--ease-out);
+}
+
+.scrollBottom:hover {
+  transform: scale(1.1);
+}
